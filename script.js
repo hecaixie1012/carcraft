@@ -88,6 +88,23 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return earthRadius * c;
 }
 
+function getLocationErrorMessage(error) {
+
+    if (error.code === 1) {
+        return "未允許定位權限";
+    }
+
+    if (error.code === 2) {
+        return "目前無法取得位置";
+    }
+
+    if (error.code === 3) {
+        return "定位逾時";
+    }
+
+    return "未知錯誤";
+}
+
 
 // ========================
 // 更新畫面上的距離
@@ -97,11 +114,19 @@ function updateDistance() {
 
     if (
         currentLatitude === null ||
-        currentLongitude === null ||
+        currentLongitude === null
+    ) {
+        distanceText.textContent = "--";
+        statusText.textContent = "正在等待目前位置...";
+        return;
+    }
+
+    if (
         savedLatitude === null ||
         savedLongitude === null
     ) {
         distanceText.textContent = "--";
+        statusText.textContent = "請先記錄停車位置";
         return;
     }
 
@@ -119,7 +144,8 @@ function updateDistance() {
     if (roundedDistance <= 5) {
         statusText.textContent = "已到達車輛附近！";
     } else {
-        statusText.textContent = "距離車輛還有 " + roundedDistance + " 公尺";
+        statusText.textContent =
+            "距離車輛還有 " + roundedDistance + " 公尺";
     }
 }
 
@@ -127,12 +153,27 @@ function updateDistance() {
 // ========================
 // 取得目前位置
 // ========================
+// ========================
+// 取得目前位置
+// ========================
+
+let watchId = null;
 
 locationButton.addEventListener("click", function () {
 
-    statusText.textContent = "正在取得位置...";
+    if (!navigator.geolocation) {
+        statusText.textContent = "此瀏覽器不支援定位";
+        return;
+    }
 
-    navigator.geolocation.getCurrentPosition(
+    if (watchId !== null) {
+        statusText.textContent = "定位追蹤中";
+        return;
+    }
+
+    statusText.textContent = "正在開始定位...";
+
+    watchId = navigator.geolocation.watchPosition(
 
         function (position) {
 
@@ -145,26 +186,24 @@ locationButton.addEventListener("click", function () {
             longitudeText.textContent =
                 currentLongitude.toFixed(6);
 
-            statusText.textContent = "定位成功";
-
             updateDistance();
         },
 
         function (error) {
 
-            statusText.textContent = "定位失敗";
+            statusText.textContent =
+                "定位失敗：" + getLocationErrorMessage(error);
 
             console.log(error);
         },
 
         {
             enableHighAccuracy: true,
-            timeout: 10000,
+            timeout: 30000,
             maximumAge: 0
         }
     );
 });
-
 
 // ========================
 // 記錄停車位置
