@@ -9,7 +9,7 @@ const statusText = document.querySelector("#status");
 const latitudeText = document.querySelector("#latitude");
 const longitudeText = document.querySelector("#longitude");
 const locationButton = document.querySelector("#locationButton");
-
+const compassButton = document.querySelector("#compassButton");
 const parkLatitudeText = document.querySelector("#parkLatitude");
 const parkLongitudeText = document.querySelector("#parkLongitude");
 const saveButton = document.querySelector("#saveButton");
@@ -269,4 +269,88 @@ if (
         savedLongitude.toFixed(6);
 
     statusText.textContent = "已載入停車位置";
+}
+
+// ========================
+// 啟動手機指南針
+// ========================
+
+compassButton.addEventListener("click", function () {
+
+    if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+
+        DeviceOrientationEvent.requestPermission()
+            .then(function (permissionState) {
+
+                if (permissionState === "granted") {
+                    startCompass();
+                } else {
+                    statusText.textContent =
+                        "未允許使用指南針";
+                }
+            })
+            .catch(function (error) {
+
+                statusText.textContent =
+                    "指南針權限取得失敗";
+
+                console.error(error);
+            });
+
+    } else {
+
+        startCompass();
+    }
+});
+
+
+// ========================
+// 開始讀取手機方向
+// ========================
+
+function startCompass() {
+
+    statusText.textContent = "指南針已啟動";
+
+    window.addEventListener(
+        "deviceorientation",
+        handleOrientation
+    );
+}
+
+
+// ========================
+// 處理手機方向
+// ========================
+
+function handleOrientation(event) {
+
+    let heading;
+
+    if (event.webkitCompassHeading !== undefined) {
+
+        heading = event.webkitCompassHeading;
+
+    } else if (event.alpha !== null) {
+
+        heading = 360 - event.alpha;
+
+    } else {
+
+        statusText.textContent =
+            "無法取得手機方向";
+
+        return;
+    }
+
+    arrow.style.transform =
+        "rotate(" + heading + "deg)";
+
+    statusText.textContent =
+        "手機朝向：" +
+        Math.round(heading) +
+        "°";
 }
