@@ -173,22 +173,26 @@ function updateDistance() {
     const roundedDistance = Math.round(distanceInMeters);
 
     const bearing = calculateBearing(
-    currentLatitude,
-    currentLongitude,
-    savedLatitude,
-    savedLongitude
+        currentLatitude,
+        currentLongitude,
+        savedLatitude,
+        savedLongitude
     );
-
-    statusText.textContent =
-    "停車方向：" + Math.round(bearing) + "°";
 
     distanceText.textContent = roundedDistance;
 
     if (roundedDistance <= 5) {
-        statusText.textContent = "已到達車輛附近！";
+        statusText.textContent =
+            "已到達車輛附近！停車方向：" +
+            Math.round(bearing) +
+            "°";
     } else {
         statusText.textContent =
-            "距離車輛還有 " + roundedDistance + " 公尺";
+            "距離車輛還有 " +
+            roundedDistance +
+            " 公尺，停車方向：" +
+            Math.round(bearing) +
+            "°";
     }
 }
 
