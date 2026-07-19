@@ -150,9 +150,7 @@ function updateDistance() {
 }
 
 
-// ========================
-// 取得目前位置
-// ========================
+
 // ========================
 // 取得目前位置
 // ========================
@@ -190,6 +188,8 @@ locationButton.addEventListener("click", function () {
         },
 
         function (error) {
+
+            watchId = null;
 
             statusText.textContent =
                 "定位失敗：" + getLocationErrorMessage(error);
