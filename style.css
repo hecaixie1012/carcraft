@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: #1b1b1b;
+    color: white;
+
+    font-family: monospace;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-box {
+    width: 320px;
+    padding: 24px;
+
+    background-color: #303030;
+
+    border: 6px solid #777777;
+    box-shadow: 0 0 0 6px #111111;
+
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+.compass {
+    width: 180px;
+    height: 180px;
+
+    margin: 30px auto;
+
+    background-color: #454545;
+
+    border: 8px solid #999999;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow {
+    width: 28px;
+    height: 110px;
+
+    display: flex;
+    flex-direction: column;
+
+    transform-origin: center center;
+    transition: transform 0.2s linear;
+}
+
+.arrow-red {
+    width: 28px;
+    height: 55px;
+
+    background-color: red;
+
+    border: 3px solid #8b0000;
+    box-sizing: border-box;
+}
+
+.arrow-white {
+    width: 28px;
+    height: 55px;
+
+    background-color: white;
+
+    border: 3px solid #bbbbbb;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px 20px;
+    margin-top: 10px;
+
+    background-color: #555555;
+    color: white;
+
+    border: 4px solid #999999;
+
+    font-family: monospace;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #777777;
+}
+
+.game-box p {
+    margin: 12px 0;
+}
+
+#restartButton {
+    margin-top: 16px;
+}
