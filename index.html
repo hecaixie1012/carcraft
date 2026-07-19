@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CarCraft Compass</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="game-box">
+
+        <h1>CarCraft Compass</h1>
+
+        <div class="compass">
+
+            <div class="arrow">
+                <div class="arrow-red"></div>
+                <div class="arrow-white"></div>
+            </div>
+
+        </div>
+
+        <p>
+            距離：
+            <span id="distance">--</span>
+            公尺
+        </p>
+
+        <p>
+            狀態：
+            <span id="status">等待定位...</span>
+        </p>
+
+        <div class="location-box">
+            <p>目前位置</p>
+
+            <p>
+                緯度：
+                <span id="latitude">尚未取得</span>
+            </p>
+
+            <p>
+                經度：
+                <span id="longitude">尚未取得</span>
+            </p>
+
+            <button id="locationButton">
+                取得目前位置
+            </button>
+
+            <hr>
+
+            <p>停車位置</p>
+
+            <p>
+                緯度：
+                <span id="parkLatitude">尚未記錄</span>
+            </p>
+
+            <p>
+                經度：
+                <span id="parkLongitude">尚未記錄</span>
+            </p>
+
+            <button id="saveButton">
+                記錄停車位置
+            </button>
+
+        </div>
+
+        
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
