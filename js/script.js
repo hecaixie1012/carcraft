@@ -6,6 +6,7 @@ const arrow = document.querySelector(".arrow");
 const distanceText = document.querySelector("#distance");
 const statusText = document.querySelector("#status");
 const bearingText = document.querySelector("#bearing");
+const rotationText =document.querySelector("#rotation");
 
 const latitudeText = document.querySelector("#latitude");
 const longitudeText = document.querySelector("#longitude");
@@ -21,6 +22,7 @@ const saveButton = document.querySelector("#saveButton");
 // ========================
 
 let angle = 0;
+let phoneHeading = 0;
 
 let currentLatitude = null;
 let currentLongitude = null;
@@ -440,11 +442,10 @@ function handleOrientation(event) {
         return;
     }
 
-    arrow.style.transform =
-        "rotate(" + heading + "deg)";
+    phoneHeading = heading;
 
     statusText.textContent =
-        "手機朝向：" +
-        Math.round(heading) +
-        "°";
+        "手機朝向：" + Math.round(heading) + "°";
+    
+    updateArrowRotation();
 }
