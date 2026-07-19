@@ -88,6 +88,39 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return earthRadius * c;
 }
 
+// ========================
+// 計算目標位置的方位角
+// 回傳範圍：0～360 度
+// ========================
+
+function calculateBearing(lat1, lon1, lat2, lon2) {
+
+    const firstLatitude = toRadians(lat1);
+    const secondLatitude = toRadians(lat2);
+    const longitudeDifference =
+        toRadians(lon2 - lon1);
+
+    const y =
+        Math.sin(longitudeDifference) *
+        Math.cos(secondLatitude);
+
+    const x =
+        Math.cos(firstLatitude) *
+        Math.sin(secondLatitude) -
+
+        Math.sin(firstLatitude) *
+        Math.cos(secondLatitude) *
+        Math.cos(longitudeDifference);
+
+    const bearingInRadians =
+        Math.atan2(y, x);
+
+    const bearingInDegrees =
+        bearingInRadians * 180 / Math.PI;
+
+    return (bearingInDegrees + 360) % 360;
+}
+
 function getLocationErrorMessage(error) {
 
     if (error.code === 1) {
@@ -138,6 +171,16 @@ function updateDistance() {
     );
 
     const roundedDistance = Math.round(distanceInMeters);
+
+    const bearing = calculateBearing(
+    currentLatitude,
+    currentLongitude,
+    savedLatitude,
+    savedLongitude
+    );
+
+    statusText.textContent =
+    "停車方向：" + Math.round(bearing) + "°";
 
     distanceText.textContent = roundedDistance;
 
