@@ -1,98 +1,173 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CarCraft Compass</title>
-
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
 <body>
 
-    <div class="game-box">
+    <main class="app">
 
-        <h1>CarCraft Compass</h1>
+        <header class="app-header">
+            <p class="app-label">PARKING NAVIGATION</p>
+            <h1>CarCraft Compass</h1>
+            <p class="app-description">
+                記錄停車位置，跟著指南針找到車輛
+            </p>
+        </header>
 
-        <div class="compass">
+        <section class="navigation-card">
 
-            <div class="arrow">
-                <div class="arrow-red"></div>
-                <div class="arrow-white"></div>
+            <div class="distance-panel">
+                <span class="distance-label">距離車輛</span>
+
+                <div class="distance-value">
+                    <span id="distance">--</span>
+                    <span class="distance-unit">公尺</span>
+                </div>
+
+                <p class="status-message">
+                    <span id="status">等待定位...</span>
+                </p>
             </div>
 
-        </div>
+            <div class="compass-area">
 
-        <p>
-            距離：
-            <span id="distance">--</span>
-            公尺
-        </p>
+                <div class="compass">
 
-        <p>
-            狀態：
-            <span id="status">等待定位...</span>
-        </p>
+                    <span class="direction direction-north">N</span>
+                    <span class="direction direction-east">E</span>
+                    <span class="direction direction-south">S</span>
+                    <span class="direction direction-west">W</span>
 
-        <p>
-            車輛方位：
-            <span id="bearing">--</span>°
-        </p>
+                    <div class="compass-center"></div>
 
-        <p>
-            箭頭旋轉：
-            <span id="rotation">--</span>°
-        </p>
+                    <div class="arrow">
+                        <div class="arrow-red"></div>
+                        <div class="arrow-white"></div>
+                    </div>
 
-        <div class="location-box">
-            <p>目前位置</p>
+                </div>
 
-            <p>
-                緯度：
-                <span id="latitude">尚未取得</span>
-            </p>
+                <p class="compass-hint">
+                    紅色箭頭指向停車位置
+                </p>
 
-            <p>
-                經度：
-                <span id="longitude">尚未取得</span>
-            </p>
+            </div>
 
-            <button id="locationButton">
-                取得目前位置
-            </button>
+            <div class="direction-data">
 
-            <button id="compassButton">
-                啟動指南針
-            </button>
+                <div class="data-item">
+                    <span class="data-label">車輛方位</span>
+                    <span class="data-value">
+                        <span id="bearing">--</span>°
+                    </span>
+                </div>
 
-            <hr>
+                <div class="data-item">
+                    <span class="data-label">箭頭旋轉</span>
+                    <span class="data-value">
+                        <span id="rotation">--</span>°
+                    </span>
+                </div>
 
-            <p>停車位置</p>
+            </div>
 
-            <p>
-                緯度：
-                <span id="parkLatitude">尚未記錄</span>
-            </p>
+        </section>
 
-            <p>
-                經度：
-                <span id="parkLongitude">尚未記錄</span>
-            </p>
+        <section class="control-card">
 
-            <button id="saveButton">
-                記錄停車位置
-            </button>
+            <h2>開始導航</h2>
 
-        </div>
+            <div class="button-group">
 
-        
+                <button id="locationButton" class="game-button primary-button">
+                    <span class="button-icon">📍</span>
+                    取得目前位置
+                </button>
 
-    </div>
+                <button id="compassButton" class="game-button">
+                    <span class="button-icon">🧭</span>
+                    啟動指南針
+                </button>
+
+                <button id="saveButton" class="game-button save-button">
+                    <span class="button-icon">🚗</span>
+                    記錄停車位置
+                </button>
+
+            </div>
+
+        </section>
+
+        <section class="location-card">
+
+            <div class="location-section">
+
+                <div class="section-title">
+                    <span class="section-icon">📱</span>
+
+                    <div>
+                        <h2>目前位置</h2>
+                        <p>手機現在的 GPS 座標</p>
+                    </div>
+                </div>
+
+                <div class="coordinate-grid">
+
+                    <div class="coordinate-item">
+                        <span class="coordinate-label">緯度</span>
+                        <span id="latitude" class="coordinate-value">
+                            尚未取得
+                        </span>
+                    </div>
+
+                    <div class="coordinate-item">
+                        <span class="coordinate-label">經度</span>
+                        <span id="longitude" class="coordinate-value">
+                            尚未取得
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="location-divider"></div>
+
+            <div class="location-section">
+
+                <div class="section-title">
+                    <span class="section-icon">🚙</span>
+
+                    <div>
+                        <h2>停車位置</h2>
+                        <p>最後一次記錄的座標</p>
+                    </div>
+                </div>
+
+                <div class="coordinate-grid">
+
+                    <div class="coordinate-item">
+                        <span class="coordinate-label">緯度</span>
+                        <span id="parkLatitude" class="coordinate-value">
+                            尚未記錄
+                        </span>
+                    </div>
+
+                    <div class="coordinate-item">
+                        <span class="coordinate-label">經度</span>
+                        <span id="parkLongitude" class="coordinate-value">
+                            尚未記錄
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="app-footer">
+            CarCraft Compass · Web V1
+        </footer>
+
+    </main>
 
     <script src="js/script.js"></script>
 
 </body>
-
-</html>

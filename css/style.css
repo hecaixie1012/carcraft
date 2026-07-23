@@ -1,104 +1,583 @@
+/* ========================
+   基本設定
+======================== */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     min-height: 100vh;
 
-    background-color: #1b1b1b;
-    color: white;
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.65),
+            rgba(0, 0, 0, 0.8)
+        ),
+        repeating-linear-gradient(
+            45deg,
+            #202020 0,
+            #202020 16px,
+            #252525 16px,
+            #252525 32px
+        );
 
+    color: #ffffff;
     font-family: monospace;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 20px 12px;
 }
 
-.game-box {
-    width: 320px;
-    padding: 24px;
+button,
+input,
+textarea {
+    font: inherit;
+}
 
-    background-color: #303030;
 
-    border: 6px solid #777777;
-    box-shadow: 0 0 0 6px #111111;
+/* ========================
+   App 主體
+======================== */
 
+.app {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+
+/* ========================
+   標題區
+======================== */
+
+.app-header {
+    margin-bottom: 20px;
     text-align: center;
 }
 
-h1 {
-    font-size: 24px;
-    margin-top: 0;
+.app-label {
+    margin: 0 0 6px;
+
+    color: #8fd14f;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.app-header h1 {
+    margin: 0;
+
+    font-size: 28px;
+    line-height: 1.2;
+
+    text-shadow:
+        3px 3px 0 #111111;
+}
+
+.app-description {
+    margin: 10px 0 0;
+
+    color: #cfcfcf;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* ========================
+   通用卡片
+======================== */
+
+.navigation-card,
+.control-card,
+.location-card {
+    margin-bottom: 18px;
+    padding: 18px;
+
+    background-color: #303030;
+
+    border: 4px solid #777777;
+
+    box-shadow:
+        0 0 0 4px #111111,
+        inset 0 0 0 2px #444444;
+}
+
+
+/* ========================
+   距離顯示
+======================== */
+
+.distance-panel {
+    padding-bottom: 16px;
+    text-align: center;
+
+    border-bottom: 3px solid #1c1c1c;
+}
+
+.distance-label {
+    display: block;
+
+    color: #bdbdbd;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.distance-value {
+    margin-top: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+#distance {
+    color: #8fd14f;
+    font-size: 52px;
+    font-weight: bold;
+    line-height: 1;
+
+    text-shadow:
+        3px 3px 0 #111111;
+}
+
+.distance-unit {
+    margin-bottom: 5px;
+
+    color: #dddddd;
+    font-size: 16px;
+}
+
+.status-message {
+    min-height: 22px;
+    margin: 12px 0 0;
+
+    color: #ffd866;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ========================
+   指南針區
+======================== */
+
+.compass-area {
+    padding: 22px 0 16px;
+    text-align: center;
 }
 
 .compass {
-    width: 180px;
-    height: 180px;
+    position: relative;
 
-    margin: 30px auto;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
 
-    background-color: #454545;
+    background:
+        radial-gradient(
+            circle,
+            #555555 0%,
+            #3a3a3a 65%,
+            #2c2c2c 100%
+        );
 
-    border: 8px solid #999999;
+    border: 10px solid #999999;
     border-radius: 50%;
+
+    box-shadow:
+        0 0 0 5px #181818,
+        inset 0 0 0 4px #626262;
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.compass::before,
+.compass::after {
+    content: "";
+    position: absolute;
+
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.compass::before {
+    width: 4px;
+    height: 100%;
+}
+
+.compass::after {
+    width: 100%;
+    height: 4px;
+}
+
+.direction {
+    position: absolute;
+    z-index: 3;
+
+    color: #d9d9d9;
+    font-size: 18px;
+    font-weight: bold;
+
+    text-shadow:
+        2px 2px 0 #111111;
+}
+
+.direction-north {
+    top: 10px;
+    color: #ff5b5b;
+}
+
+.direction-east {
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.direction-south {
+    bottom: 10px;
+}
+
+.direction-west {
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.compass-center {
+    position: absolute;
+    z-index: 5;
+
+    width: 18px;
+    height: 18px;
+
+    background-color: #1a1a1a;
+
+    border: 4px solid #cccccc;
+    border-radius: 50%;
+}
+
 .arrow {
-    width: 28px;
-    height: 110px;
+    position: relative;
+    z-index: 4;
+
+    width: 32px;
+    height: 138px;
 
     display: flex;
     flex-direction: column;
 
     transform-origin: center center;
     transition: transform 0.2s linear;
+
+    filter: drop-shadow(3px 3px 0 #111111);
+}
+
+.arrow-red,
+.arrow-white {
+    width: 32px;
+    height: 69px;
+
+    box-sizing: border-box;
 }
 
 .arrow-red {
-    width: 28px;
-    height: 55px;
+    background-color: #e53935;
+    border: 4px solid #8b0000;
 
-    background-color: red;
-
-    border: 3px solid #8b0000;
-    box-sizing: border-box;
+    clip-path: polygon(
+        50% 0,
+        100% 100%,
+        0 100%
+    );
 }
 
 .arrow-white {
-    width: 28px;
-    height: 55px;
+    background-color: #f5f5f5;
+    border: 4px solid #aaaaaa;
 
-    background-color: white;
-
-    border: 3px solid #bbbbbb;
-    box-sizing: border-box;
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+    );
 }
 
-button {
-    padding: 12px 20px;
-    margin-top: 10px;
+.compass-hint {
+    margin: 16px 0 0;
+
+    color: #bdbdbd;
+    font-size: 13px;
+}
+
+
+/* ========================
+   方位資料
+======================== */
+
+.direction-data {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.data-item {
+    padding: 12px 10px;
+
+    background-color: #242424;
+
+    border: 3px solid #555555;
+
+    text-align: center;
+}
+
+.data-label {
+    display: block;
+
+    color: #aaaaaa;
+    font-size: 12px;
+}
+
+.data-value {
+    display: block;
+    margin-top: 6px;
+
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* ========================
+   操作按鈕
+======================== */
+
+.control-card h2,
+.location-card h2 {
+    margin: 0;
+
+    font-size: 18px;
+}
+
+.button-group {
+    margin-top: 14px;
+
+    display: grid;
+    gap: 12px;
+}
+
+.game-button {
+    width: 100%;
+    min-height: 54px;
+    padding: 12px 16px;
 
     background-color: #555555;
-    color: white;
+    color: #ffffff;
 
-    border: 4px solid #999999;
+    border: 4px solid #8a8a8a;
+    border-bottom-color: #282828;
+    border-right-color: #282828;
 
-    font-family: monospace;
+    box-shadow:
+        inset 2px 2px 0 rgba(255, 255, 255, 0.12);
+
     font-size: 16px;
+    font-weight: bold;
 
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #777777;
+.game-button:hover {
+    background-color: #686868;
 }
 
-.game-box p {
-    margin: 12px 0;
+.game-button:active {
+    transform: translateY(2px);
+
+    border-top-color: #282828;
+    border-left-color: #282828;
+    border-bottom-color: #8a8a8a;
+    border-right-color: #8a8a8a;
 }
 
-#restartButton {
-    margin-top: 16px;
+.primary-button {
+    background-color: #3d6f9e;
+    border-color: #6fa7d9;
+    border-bottom-color: #18344d;
+    border-right-color: #18344d;
+}
+
+.primary-button:hover {
+    background-color: #4a82b7;
+}
+
+.save-button {
+    background-color: #4f7d31;
+    border-color: #7aad52;
+    border-bottom-color: #243c17;
+    border-right-color: #243c17;
+}
+
+.save-button:hover {
+    background-color: #5f963b;
+}
+
+.button-icon {
+    margin-right: 6px;
+}
+
+
+/* ========================
+   位置資訊
+======================== */
+
+.location-card {
+    display: grid;
+    gap: 18px;
+}
+
+.location-section {
+    min-width: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title h2 {
+    margin: 0;
+}
+
+.section-title p {
+    margin: 4px 0 0;
+
+    color: #aaaaaa;
+    font-size: 12px;
+}
+
+.section-icon {
+    font-size: 26px;
+}
+
+.coordinate-grid {
+    margin-top: 14px;
+
+    display: grid;
+    gap: 10px;
+}
+
+.coordinate-item {
+    padding: 10px 12px;
+
+    background-color: #242424;
+
+    border-left: 4px solid #777777;
+}
+
+.coordinate-label {
+    display: block;
+
+    color: #9f9f9f;
+    font-size: 12px;
+}
+
+.coordinate-value {
+    display: block;
+    margin-top: 4px;
+
+    color: #ffffff;
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+.location-divider {
+    height: 3px;
+
+    background-color: #181818;
+
+    border-bottom: 1px solid #555555;
+}
+
+
+/* ========================
+   頁尾
+======================== */
+
+.app-footer {
+    padding: 4px 0 20px;
+
+    color: #777777;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* ========================
+   小螢幕調整
+======================== */
+
+@media (max-width: 360px) {
+
+    body {
+        padding: 14px 8px;
+    }
+
+    .navigation-card,
+    .control-card,
+    .location-card {
+        padding: 14px;
+    }
+
+    .compass {
+        width: 195px;
+        height: 195px;
+    }
+
+    .arrow {
+        height: 120px;
+    }
+
+    .arrow-red,
+    .arrow-white {
+        height: 60px;
+    }
+
+    #distance {
+        font-size: 44px;
+    }
+}
+
+
+/* ========================
+   較寬畫面調整
+======================== */
+
+@media (min-width: 700px) {
+
+    .app {
+        max-width: 760px;
+    }
+
+    .navigation-card {
+        padding: 24px;
+    }
+
+    .location-card {
+        grid-template-columns: 1fr 3px 1fr;
+        align-items: stretch;
+    }
+
+    .location-divider {
+        width: 3px;
+        height: auto;
+    }
+
+    .button-group {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
